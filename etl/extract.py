@@ -8,14 +8,16 @@ load_dotenv()
 SOURCE_DB = os.getenv("SOURCE_DB")
 logger = get_logger(__name__)
 
+def get_engine():
+    return create_engine(SOURCE_DB)
 
-def get_last_watermark(engine):
+def get_last_watermark(engine, table_name):
     """Aakhri baar kab data load hua"""
     with engine.connect() as conn:
         result = conn.execute(text("""
             SELECT last_loaded 
             FROM etl_watermark 
-            WHERE table_name = 'employees'
+            WHERE table_name = table_name
         """))
         return result.scalar()
 
@@ -34,8 +36,8 @@ def update_watermark(engine):
 def extract_employees():
 
     try:
-        engine = create_engine(SOURCE_DB)
-        last_loaded = get_last_watermark(engine)
+        engine = get_engine()
+        last_loaded = get_last_watermark(engine, 'employees')
         print(f"last_loaded ================= {last_loaded}")
         
         query = text("""
@@ -46,6 +48,27 @@ def extract_employees():
         """)
         
         df = pd.read_sql(query, engine, params={"last_loaded": last_loaded})
+        logger.info(f"Extracted {len(df)} new/updated rows")
+        return df, engine
+    
+    except Exception as e:
+        logger.info(f"Extract failed: {e}")
+        raise
+
+def extract_departments():
+    try:
+        engine = get_engine()
+        last_loaded = get_last_watermark(engine, 'departments')
+        print(f"last_loaded ================= {last_loaded}")
+        
+        query = text("""
+            SELECT dept_id, dept_name, location, budget, updated_at
+            FROM departments
+            WHERE updated_at > :last_loaded
+        """)
+        
+        df = pd.read_sql(query, engine, params={"last_loaded": last_loaded})
+        
         logger.info(f"Extracted {len(df)} new/updated rows")
         return df, engine
     

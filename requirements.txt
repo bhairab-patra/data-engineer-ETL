@@ -15,6 +15,7 @@ apache-airflow-providers-standard==1.14.0
 apache-airflow-task-sdk==1.2.2
 argcomplete==3.6.3
 asgiref==3.11.1
+astroid==4.0.4
 attrs==26.1.0
 babel==2.18.0
 cachetools==7.1.4
@@ -45,6 +46,7 @@ httptools==0.8.0
 httpx==0.28.1
 idna==3.18
 importlib_metadata==9.0.0
+isort==8.0.1
 itsdangerous==2.2.0
 Jinja2==3.1.6
 jsonschema==4.26.0
@@ -56,6 +58,7 @@ lockfile==0.12.2
 Mako==1.3.12
 markdown-it-py==4.2.0
 MarkupSafe==3.0.3
+mccabe==0.7.0
 mdurl==0.1.2
 methodtools==0.4.7
 more-itertools==11.1.0
@@ -76,10 +79,12 @@ pandas==3.0.3
 pathlib_abc==0.5.2
 pathspec==1.1.1
 pendulum==3.2.0
+platformdirs==4.10.0
 pluggy==1.6.0
 protobuf==6.33.6
 psutil==7.2.2
 psycopg2-binary==2.9.12
+py4j==0.10.9.9
 pycparser==3.0
 pydantic==2.13.4
 pydantic-extra-types==2.11.1
@@ -88,6 +93,8 @@ pydantic_core==2.46.4
 Pygments==2.20.0
 pygtrie==2.5.0
 PyJWT==2.13.0
+pylint==4.0.6
+pyspark==4.1.2
 python-daemon==3.1.2
 python-dateutil==2.9.0.post0
 python-dotenv==1.2.2
@@ -113,6 +120,7 @@ tabulate==0.10.0
 tenacity==9.1.4
 termcolor==3.3.0
 text-unidecode==1.3
+tomlkit==0.15.0
 typer==0.26.7
 typing-inspection==0.4.2
 typing_extensions==4.15.0
